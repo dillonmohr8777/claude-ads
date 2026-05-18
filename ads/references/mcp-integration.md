@@ -16,8 +16,19 @@ claude-ads works with manually provided data by default (exports, screenshots, p
 
 **Setup:**
 1. Install: `pip install mcp-google-ads` (or clone repo)
-2. Configure Google Ads API credentials (OAuth2 or service account)
-3. Add to `.mcp.json`:
+2. Configure Google Ads API credentials (OAuth2 or service account) — use a **read-only OAuth scope** for audit work
+3. **Before adding credentials to `.mcp.json`, do this first:**
+   - Add `.mcp.json` to your project's `.gitignore` so the file never reaches a public repo
+   - Set restrictive file permissions: `chmod 600 .mcp.json` on Unix/macOS
+   - Export the credentials into your shell as environment variables (so they live in your OS keychain / `.bashrc` / `~/.config`, not in a project file):
+     ```bash
+     export GOOGLE_ADS_DEVELOPER_TOKEN="..."
+     export GOOGLE_ADS_CLIENT_ID="..."
+     export GOOGLE_ADS_CLIENT_SECRET="..."
+     export GOOGLE_ADS_REFRESH_TOKEN="..."
+     export GOOGLE_ADS_LOGIN_CUSTOMER_ID="..."
+     ```
+4. Reference the env vars in `.mcp.json` so the file itself contains no secrets:
 ```json
 {
   "mcpServers": {
@@ -25,16 +36,18 @@ claude-ads works with manually provided data by default (exports, screenshots, p
       "command": "python",
       "args": ["-m", "mcp_google_ads"],
       "env": {
-        "GOOGLE_ADS_DEVELOPER_TOKEN": "your-token",
-        "GOOGLE_ADS_CLIENT_ID": "your-client-id",
-        "GOOGLE_ADS_CLIENT_SECRET": "your-client-secret",
-        "GOOGLE_ADS_REFRESH_TOKEN": "your-refresh-token",
-        "GOOGLE_ADS_LOGIN_CUSTOMER_ID": "your-mcc-id"
+        "GOOGLE_ADS_DEVELOPER_TOKEN": "${GOOGLE_ADS_DEVELOPER_TOKEN}",
+        "GOOGLE_ADS_CLIENT_ID": "${GOOGLE_ADS_CLIENT_ID}",
+        "GOOGLE_ADS_CLIENT_SECRET": "${GOOGLE_ADS_CLIENT_SECRET}",
+        "GOOGLE_ADS_REFRESH_TOKEN": "${GOOGLE_ADS_REFRESH_TOKEN}",
+        "GOOGLE_ADS_LOGIN_CUSTOMER_ID": "${GOOGLE_ADS_LOGIN_CUSTOMER_ID}"
       }
     }
   }
 }
 ```
+
+> ⚠ **Why this matters.** A Google Ads refresh token + client secret + developer token is a full-account credential bundle. Committing `.mcp.json` with inline secrets to a public repo gives every reader long-lived API access. The `${VAR}` form keeps the file itself safe to commit if needed.
 
 **What becomes automated:**
 - Search term data for G13, G16, G17, G18, G19 (wasted spend checks)
@@ -110,7 +123,8 @@ The recommended approach combines MCP live data with claude-ads structured analy
 
 ## Security Notes
 
-- MCP servers run locally; no data leaves your machine (except API calls to ad platforms)
-- Credentials stored in `.mcp.json` or environment variables
-- Read-only access recommended for audit purposes
-- For write operations (campaign changes), see the CEP safety protocol discussion in the itallstartedwithaidea/google-ads-skills repo
+- **MCP servers run locally** — no data leaves your machine except the API calls each server makes to its target ad platform.
+- **Never inline credentials in committed files.** Add `.mcp.json` to `.gitignore`, set `chmod 600 .mcp.json` on Unix, and use `${ENV_VAR}` interpolation so the file contains references — not values. See the Google Ads setup above for the canonical pattern; the same applies to Meta, LinkedIn, and any future MCP server.
+- **Use read-only OAuth scopes** for audit work. A refresh token issued for `https://www.googleapis.com/auth/adwords` allows campaign mutations; for audit-only the read scope is sufficient.
+- **Rotate any token that was ever committed to a public repo**, even briefly. Treat the credential as compromised — search-engine caches and forks make deletion unreliable.
+- **For write operations** (campaign changes, budget edits), see the CEP safety protocol discussion in the itallstartedwithaidea/google-ads-skills repo. Claude Ads itself is audit-only by design.
