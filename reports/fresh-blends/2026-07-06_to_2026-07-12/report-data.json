@@ -1,0 +1,88 @@
+{
+  "brand": "Fresh Blends",
+  "partner": "Kwik Trip",
+  "report_period": "2026-07-06 through 2026-07-12",
+  "prepared_on": "2026-07-12",
+  "current_status": {
+    "campaign_status": "PAUSED",
+    "pause_directive_date": "2026-07-09",
+    "pause_confirmation": "Mia confirmed: We will pause for now.",
+    "current_week_export_verified": false,
+    "current_week_kpis": {
+      "impressions": null,
+      "clicks": null,
+      "ctr": null,
+      "avg_cpc": null,
+      "spend": null,
+      "get_directions": null,
+      "cost_per_direction": null
+    },
+    "display_rule": "Show N/A for current-week KPIs. Do not carry forward older numbers as if they were current."
+  },
+  "locations": [
+    {"campaign": "Kwik Trip #1110", "status": "PAUSED"},
+    {"campaign": "Kwik Trip #1161", "status": "PAUSED"},
+    {"campaign": "Kwik Trip #573", "status": "PAUSED"},
+    {"campaign": "Kwik Trip #633", "status": "PAUSED"}
+  ],
+  "historical_benchmark_story": {
+    "label": "Last verified active period; historical reference only",
+    "period": "2026-06-29 through 2026-07-05",
+    "fresh_blends_only": true,
+    "verified_metrics": {
+      "spend": 296.75,
+      "clicks": 709,
+      "impressions": 32274,
+      "ctr": 0.022,
+      "avg_cpc": 0.42
+    },
+    "industry_benchmark": {
+      "category": "Restaurants & Food Google Ads CPC",
+      "avg_cpc": 2.05
+    },
+    "comparison": {
+      "calculation": "(2.05 - 0.42) / 2.05 * 100",
+      "percent_below_benchmark": 79.5,
+      "approved_headline": "Last verified CPC was 79.5% below the $2.05 Restaurants & Food benchmark.",
+      "wording_rule": "Say below benchmark, not better by 79.5%. This is historical and must not be presented as July 6-12 delivery."
+    },
+    "optional_secondary_comparison": {
+      "metric": "Cost per Get Direction",
+      "historical_value": 2.71,
+      "industry_benchmark": 21.0,
+      "percent_below_benchmark": 87.1,
+      "wording": "Historical June cost per direction was about 87.1% below the approximately $21 benchmark; show only with an explicit historical label."
+    }
+  },
+  "historical_source_rows": [
+    {"campaign": "Kwik Trip #1110", "impressions": 22503, "clicks": 310, "ctr": 0.0138, "avg_cpc": 0.44, "spend": 135.75},
+    {"campaign": "Kwik Trip #1161", "impressions": 15935, "clicks": 274, "ctr": 0.0172, "avg_cpc": 0.46, "spend": 125.05},
+    {"campaign": "Kwik Trip #633", "impressions": 12340, "clicks": 230, "ctr": 0.0186, "avg_cpc": 0.68, "spend": 156.86},
+    {"campaign": "Kwik Trip #573", "impressions": 17463, "clicks": 230, "ctr": 0.0132, "avg_cpc": 0.62, "spend": 142.63}
+  ],
+  "historical_context_only": {
+    "june_report": {
+      "spend": 2000.0,
+      "impressions": 204969,
+      "ctr": 0.0196,
+      "clicks": 4017,
+      "avg_cpc": 0.5,
+      "get_directions": 738,
+      "cost_per_direction": 2.71
+    },
+    "old_mixed_deck_totals_do_not_reuse_as_fresh_blends_truth": {
+      "impressions": 158802,
+      "clicks": 2953,
+      "get_directions": 166,
+      "spend": 1042.93,
+      "reason": "The old deck mixed Replenish/7-Eleven rows into the Fresh Blends presentation."
+    }
+  },
+  "do_not_use": [
+    "Do not present any current-week KPI as zero; use N/A because the connected export was not verified.",
+    "Do not reuse the old 166 Get Directions total as a clean Fresh Blends KPI.",
+    "Do not describe the current account as active; all four listed locations are paused.",
+    "Do not include Replenish, 7-Eleven, Howard, Boca, Coral Springs, Miami 56, or Pompano in the Fresh Blends report.",
+    "Do not publish Gmail message IDs, attachment tokens, or private source links in a public repository."
+  ]
+}
